@@ -1,3 +1,5 @@
+
+## EC2-Nextcloud-Instanz
 KEY_NAME="nextcloud-key"
 NC_INSTANCE_NAME="NC-Server"
 NC_SECURITY_GROUP="nc-sec-group"
