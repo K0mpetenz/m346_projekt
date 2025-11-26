@@ -1,26 +1,19 @@
-#!bin/bash
-REGION="us-east-1"
-
-IMAGE_ID="ami-08c40ec9ead489470"
-
-INSTANCE_TYPE="t2.micro"
-
 KEY_NAME="nextcloud-key"
-
+NC_INSTANCE_NAME="NC-Server"
 NC_SECURITY_GROUP="nc-sec-group"
 
-NC_INSTANCE_NAME="NC-Server"
+aws ec2 create-key-pair --key-name "$KEY_NAME" --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/"$KEY_NAME".pem
 
-aws ec2 create-key-pair --key-name "$KEY_NAME" --key-type rsa --query "KeyMaterial" --output text > "$KEY_NAME.pem"
-chmod 700 "$KEY_NAME.pem"
+aws ec2 create-security-group --group-name "$NC_SECURITY_GROUP" --description "EC2-Nextcloud"
+aws ec2 authorize-security-group-ingress --group-name "$NC_SECURITY_GROUP" --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name "$NC_SECURITY_GROUP" --protocol tcp --port 22 --cidr 0.0.0.0/0
 
-NC_SECURITY_GROUP_ID=$(aws ec2 create-security-group --group-name "$NC_SECURITY_GROUP" --description "EC2-Nextcloud" --query 'GroupId' --output text)
-aws ec2 authorize-security-group-ingress --group-id "$NC_SECURITY_GROUP_ID" --protocol tcp --port 80 --cidr 0.0.0.0/0 
-aws ec2 authorize-security-group-ingress --group-id "$NC_SECURITY_GROUP_ID" --protocol tcp --port 22 --cidr 0.0.0.0/0 
+aws ec2 run-instances --image-id ami-08c40ec9ead489470 --count 1 --instance-type t2.micro --key-name "$KEY_NAME" --security-groups "$NC_SECURITY_GROUP" --iam-instance-profile Name=LabInstanceProfile --user-data file://ini.txt --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Nextcloud_Web}]'
 
-aws ec2 run-instances --region "$REGION" --image-id "$IMAGE_ID" --instance-type "$INSTANCE_TYPE" --key-name "$KEY_NAME" --user-data ./nc-config.txt --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="$NC_INSTANCE_NAME"}]"
+aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId, PublicIP: PublicIpAddress, State: State.Name}"
+aws ec2 describe-instance-status
 
-echo -e $WPPUBLICIP
+chmod 600 ~/.ssh/"$KEY_NAME".pem
 
 
 
