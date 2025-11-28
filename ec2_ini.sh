@@ -9,7 +9,7 @@ NC_SECURITY_GROUP="nc-sec-group"
 
 aws ec2 create-key-pair --key-name "$NC_KEY_NAME" --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/"$NC_KEY_NAME".pem
 
-aws ec2 create-security-group --group-name "$NC_SECURITY_GROUP" --description "EC2-Nextcloud"
+aws ec2 create-security-group --group-name "$NC_SECURITY_GROUP" --description "$NC_INSTANCE_NAME"
 
 aws ec2 authorize-security-group-ingress --group-name "$NC_SECURITY_GROUP" --protocol tcp --port 80 --cidr 0.0.0.0/0                 
 aws ec2 authorize-security-group-ingress --group-name "$NC_SECURITY_GROUP" --protocol tcp --port 22 --cidr 0.0.0.0/0
@@ -41,7 +41,7 @@ DB_SECURITY_GROUP="db-sec-group"
 
 aws ec2 create-key-pair --key-name "$DB_KEY_NAME" --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/"$DB_KEY_NAME".pem
 
-aws ec2 create-security-group --group-name "$DB_SECURITY_GROUP" --description "EC2-Nextcloud"
+aws ec2 create-security-group --group-name "$DB_SECURITY_GROUP" --description "$DB_INSTANCE_NAME"
 aws ec2 authorize-security-group-ingress --group-name "$DB_SECURITY_GROUP" --protocol tcp --port 80 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-name "$DB_SECURITY_GROUP" --protocol tcp --port 22 --cidr 0.0.0.0/0
 
