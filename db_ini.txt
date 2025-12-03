@@ -1,1 +1,74 @@
-#Konfiguration DB Server
+#cloud-config
+
+# Pakete aktualisieren
+package_update: true
+package_upgrade: true
+
+# MySQL Setup-Skript erstellen
+write_files:
+  - path: /root/setup_mysql.sh
+    permissions: '0755'
+    owner: root:root
+    content: |
+      #!/bin/bash
+      
+      # Variablen
+      NEUES_PASSWORT="MySecretPass123!"
+      DB_NAME="Nextcloud_DB"
+      DB_USER="NC_User"
+      DB_PASS="Passwort123!"
+      
+      # MySQL Repo hinzufügen
+      echo "MySQL Repo wird hinzugefügt..."
+      yum install -y https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+      
+      # MySQL Server installieren
+      echo "MySQL Server wird installiert..."
+      yum install -y mysql-community-server
+      
+      # MySQL starten und aktivieren
+      echo "MySQL wird gestartet..."
+      systemctl start mysqld
+      sleep 25
+      systemctl enable mysqld
+      
+      # Temporäres Root-Passwort aus Log extrahieren
+      echo "Temporäres Passwort wird ausgelesen..."
+      TEMP_PASSWORT=$(grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')
+      
+      if [ -z "$TEMP_PASSWORT" ]; then
+        echo "FEHLER: Temporäres Passwort konnte nicht gefunden werden!"
+        exit 1
+      fi
+      
+      echo "Root-Passwort wird geändert..."
+      mysql -u root -p"$TEMP_PASSWORT" --connect-expired-password \
+        -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$NEUES_PASSWORT';" 2>/dev/null
+      
+      # Datenbank erstellen
+      echo "Datenbank wird erstellt..."
+      mysql -u root -p"$NEUES_PASSWORT" -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+      
+      # Benutzer erstellen und Rechte vergeben
+      echo "Benutzer wird erstellt..."
+      mysql -u root -p"$NEUES_PASSWORT" -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
+      mysql -u root -p"$NEUES_PASSWORT" -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
+      mysql -u root -p"$NEUES_PASSWORT" -e "FLUSH PRIVILEGES;"
+      
+      # Anmeldedaten speichern
+      echo "Anmeldedaten werden gespeichert..."
+      cat <<EOF > /home/ec2-user/db_credentials.txt
+Datenbankname: $DB_NAME
+DB User: $DB_USER
+Passwort: $DB_PASS
+Root Passwort: $NEUES_PASSWORT
+EOF
+      
+      chmod 600 /home/ec2-user/db_credentials.txt
+      chown ec2-user:ec2-user /home/ec2-user/db_credentials.txt
+      
+      echo "MySQL Setup abgeschlossen!"
+
+# Setup-Skript ausführen
+runcmd:
+  - /root/setup_mysql.sh > /var/log/mysql_setup.log 2>&1
