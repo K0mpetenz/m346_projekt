@@ -25,18 +25,22 @@ packages:
   - wget
 
 runcmd:
+
   - a2enmod proxy_fcgi setenvif
   - a2enconf php*-fpm
   - a2enmod rewrite headers env dir mime
+
 
   - wget https://download.nextcloud.com/server/releases/latest.zip -O /tmp/nextcloud.zip
   - unzip /tmp/nextcloud.zip -d /tmp/
   - mv /tmp/nextcloud /var/www/html/
 
+
   - chown -R www-data:www-data /var/www/html/nextcloud
   - find /var/www/html/nextcloud/ -type d -exec chmod 750 {} \;
   - find /var/www/html/nextcloud/ -type f -exec chmod 640 {} \;
   - sudo -u www-data touch /var/www/html/nextcloud/.htaccess
+
 
   - |
     cat > /etc/apache2/sites-available/nextcloud.conf << 'EOF'
@@ -58,6 +62,31 @@ runcmd:
   - a2ensite nextcloud.conf
   - a2dissite 000-default.conf
   - systemctl reload apache2
-  - systemctl restart apache2
+  -  # Download Nextcloud
+  - wget https://download.nextcloud.com/server/releases/latest.zip -O /tmp/nextcloud.zip
+  - unzip /tmp/nextcloud.zip -d /tmp/
+  - mv /tmp/nextcloud /var/www/html/
 
-final_message: "tbd."
+
+  - chown -R www-data:www-data /var/www/html/nextcloud
+  - find /var/www/html/nextcloud/ -type d -exec chmod 750 {} \;
+  - find /var/www/html/nextcloud/ -type f -exec chmod 640 {} \;
+  - sudo -u www-data touch /var/www/html/nextcloud/.htaccess
+
+
+  - |
+    cat > /etc/apache2/sites-available/nextcloud.conf << 'EOF'
+    <VirtualHost *:80>
+        ServerName 192.168.104.94
+        DocumentRoot /var/www/html/nextcloud
+
+        <Directory /var/www/html/nextcloud/>
+            Require all granted
+            AllowOverride All
+            Options FollowSymLinks MultiViews
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/nextcloud_error.log
+        CustomLog ${APACHE_LOG_DIR}/nextcloud_access.log combined
+    </VirtualHost>
+    EOF systemctl restart apache2
