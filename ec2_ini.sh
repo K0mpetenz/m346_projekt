@@ -58,7 +58,7 @@ DB_PUBLIC_IP=$(aws ec2 describe-instances --instance-ids "$DB_INSTANCE_ID" --que
 
 # print out the public ip
 echo -e "Das ist die Public-IP der Datenbank-Instanz: $DB_PUBLIC_IP"
-
+cat /home/ec2-user/db_credentials.txt
 
 
 
