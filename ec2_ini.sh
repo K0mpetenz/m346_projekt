@@ -65,3 +65,5 @@ cat /home/ec2-user/db_credentials.txt
 
 
 
+
+
