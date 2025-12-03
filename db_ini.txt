@@ -13,9 +13,6 @@ write_files:
       #!/bin/bash
       
       # Variablen
-      NEUES_PASSWORT="MySecretPass123!"
-      DB_NAME="Nextcloud_DB"
-      DB_USER="NC_User"
       DB_PASS="Passwort123!"
       
       # MySQL Repo hinzufügen
@@ -43,29 +40,18 @@ write_files:
       
       echo "Root-Passwort wird geändert..."
       mysql -u root -p"$TEMP_PASSWORT" --connect-expired-password \
-        -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$NEUES_PASSWORT';" 2>/dev/null
+        -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MySecretPass123!';" 2>/dev/null
       
       # Datenbank erstellen
       echo "Datenbank wird erstellt..."
-      mysql -u root -p"$NEUES_PASSWORT" -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+      mysql -u root -p"MySecretPass123!" -e "CREATE DATABASE IF NOT EXISTS Nextcloud_DB;"
       
       # Benutzer erstellen und Rechte vergeben
       echo "Benutzer wird erstellt..."
-      mysql -u root -p"$NEUES_PASSWORT" -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
-      mysql -u root -p"$NEUES_PASSWORT" -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
-      mysql -u root -p"$NEUES_PASSWORT" -e "FLUSH PRIVILEGES;"
-      
-      # Anmeldedaten speichern
-      echo "Anmeldedaten werden gespeichert..."
-      cat <<EOF > /home/ec2-user/db_credentials.txt
-Datenbankname: $DB_NAME
-DB User: $DB_USER
-Passwort: $DB_PASS
-Root Passwort: $NEUES_PASSWORT
-EOF
-      
-      chmod 600 /home/ec2-user/db_credentials.txt
-      chown ec2-user:ec2-user /home/ec2-user/db_credentials.txt
+      mysql -u root -p"MySecretPass123!" -e "CREATE USER IF NOT EXISTS 'NC_User'@'%' IDENTIFIED BY 'Passwort123!';"
+      mysql -u root -p"MySecretPass123!" -e "GRANT ALL PRIVILEGES ON Nextcloud_DB.* TO 'NC_User'@'%';"
+      mysql -u root -p"MySecretPass123!" -e "FLUSH PRIVILEGES;"
+
       
       echo "MySQL Setup abgeschlossen!"
 
