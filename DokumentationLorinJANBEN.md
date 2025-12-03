@@ -65,7 +65,7 @@ HIER DAS DATENBANKSCRIPT EINFÜGEN
 # Testing
 ## Testfall 1 – Apache Installation & Webserver-Betrieb
 
-Durchgeführt von: Lorin
+Durchgeführt von: Ben und Lorin
 
 Ziel: Sicherstellen, dass Apache korrekt läuft
 
@@ -93,7 +93,7 @@ SCREENSHOT VON MySQL/SHOW DATABASES EINFÜGEN
 
 ## Testfall 3 – Verbindung Webserver ↔ Datenbankserver
 
-Durchgeführt von: Lorin und Jan
+Durchgeführt von: Ben und Jan
 
 Ziel: Sicherstellen, dass Nextcloud auf die DB zugreifen kann
 
@@ -118,8 +118,7 @@ Erwartung: Dashboard lädt normal
 
 Ergebnis: Erfolgreich
 
-📸 → SCREENSHOT NEXTCLOUD DASHBOARD EINFÜGEN
-![Dashboard](screenshots/dashboard.png)
+SCREENSHOT NEXTCLOUD DASHBOARD EINFÜGEN
 
 # Reflexion
 ## Reflexion von Lorin
