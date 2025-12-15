@@ -56,6 +56,27 @@ EC2-Umgebung: Bereitgestellt und konfiguriert von Ben Kälin
 
 Nextcloud-Clientzugriff: Webbrowser
 
+## Netzwerk- und Sicherheitskonfiguration
+
+| Quelle | Ziel | Port | Protokoll | Zweck |
+|------|-----|------|-----------|------|
+| Client | Webserver | 80 | HTTP | Zugriff auf Weboberfläche |
+| Client | Webserver | 443 | HTTPS | Verschlüsselter Zugriff |
+| Webserver | Datenbankserver | 3306 | TCP | Datenbankverbindung |
+| Admin | Webserver / DB | 22 | SSH | Wartung & Administration |
+### Architekturübersicht
+
+SCREENSHOT / ARCHITEKTURDIAGRAMM HIER EINFÜGEN
+
+**Beschreibung:**  
+Der Client greift über einen Webbrowser auf die Nextcloud-Weboberfläche zu.
+Die Anfragen werden vom Webserver verarbeitet, welcher über Port 3306 mit dem separaten Datenbankserver kommuniziert.
+Die Trennung von Webserver und Datenbank erhöht die Sicherheit und Übersichtlichkeit der Architektur.
+
+
+
+
+
 ## Übersicht
 
 - **Client**  
@@ -112,6 +133,9 @@ Anschliessend wird Nextcloud heruntergeladen, entpackt und die benötigten Verze
 Zum Schluss wird der Apache-Webserver neu gestartet.
 
 HIER INSTALLATIONSSKRIPT EINFÜGEN
+``bash
+# install_webserver.sh
+INHALT DES SKRIPTS
 
 # Datenbank-Setup
 Das Datenbank-Skript erstellt die Datenbank für Nextcloud sowie einen dedizierten Datenbankbenutzer.
@@ -209,7 +233,10 @@ SCREENSHOT NEXTCLOUD DASHBOARD HIER EINFÜGEN
 # Reflexion
 
 ## Reflexion von Lorin
-TEXT
+In diesem Projekt habe ich hauptsächlich die Dokumentation und die Umsetzung von Nextcloud zusammen mit Ben gemacht.
+Ich habe gelernt, technische Schritte klar und verständlich zu dokumentieren.
+Ich habe bei der Installation von Nextcloud viel über den Aufbau und die Funktionsweise der Anwendung gelernt.
+Ich habe gelernt, dass eine gute Dokumentation und klare Absprachen im Team wichtig sind.
 
 ## Reflexion von Ben
 TEXT
@@ -218,4 +245,7 @@ TEXT
 TEXT
 
 # Fazit
-TEXT
+Die Installation von Nextcloud auf AWS wurde erfolgreich durchgeführt.
+Mit Bash-Skripten kann man die Installation immer wieder genauso machen und es geht schneller.
+Die Architektur mit getrenntem Web- und Datenbankserver ist stabil und übersichtlich.
+Alle Testfälle wurden erfolgreich durchgeführt. Dadurch wurde bestätigt, dass die Lösung funktioniert.
