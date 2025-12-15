@@ -1,12 +1,29 @@
 # Dokumentation – Automatisierte Nextcloud-Installation
 ---
-# Introduction
 
-In diesem Projekt haben wir eine vollständig automatisierte Installation von Nextcloud realisiert.
-Mithilfe mehrerer Bash-Scripts wurden sowohl der Webserver als auch der Datenbankserver automatisch eingerichtet und konfiguriert.
-Ziel war eine reproduzierbare, stabile und nachvollziehbare Installation ohne manuelle Eingriffe.
+## Inhaltsverzeichnis
+- [Einleitung](#einleitung)
+- [Team](#team)
+- [Projektübersicht](#projektübersicht)
+- [Systemarchitektur](#systemarchitektur)
+- [Automatisierung & Installation](#automatisierung--installation)
+- [Datenbank-Setup](#datenbank-setup)
+- [Tests](#tests)
+- [Reflexion](#reflexion)
+- [Fazit](#fazit)
 
-# Members
+
+
+
+# Einleitung
+
+Ziel dieses Projekts war die vollständig automatisierte Installation einer Nextcloud-Umgebung auf Amazon Web Services (AWS).
+Dabei wurde die Infrastruktur in einen Webserver und einen separaten Datenbankserver aufgeteilt.
+Die gesamte Installation und Konfiguration erfolgte über Bash-Skripte, sodass keine manuellen Eingriffe notwendig waren.
+Dadurch ist die Lösung wiederverwendbar und nachvollziehbar dokumentiert.
+
+
+# Team
 
 Lorin Frei – Installation, Automatisierung, Testing
 
@@ -14,17 +31,17 @@ Ben Kälin – Aufbau der EC2-Instanzen & Infrastruktur
 
 Jan Dörig – Einrichtung der Datenbank & DB-Scripting
 
+
 # Projektübersicht
 
-Das Projekt gliederte sich in folgende Hauptschritte:
+Das Projekt wurde in mehrere klar definierte Schritte unterteilt:
 
-Aufsetzen der EC2-Instanzen (Webserver, DB-Server)
+- Erstellung und Konfiguration von zwei EC2-Instanzen (Webserver und Datenbankserver)
+- Einrichtung der Netzwerk- und Sicherheitsregeln (Security Groups)
+- Automatisierte Installation der benötigten Basisdienste (Apache, PHP, MariaDB)
+- Automatisierte Installation und Initialisierung von Nextcloud
+- Überprüfung der Funktionalität durch definierte Testfälle
 
-Installation der Basisdienste (Apache, PHP, MySQL/MariaDB)
-
-Automatisierte Einrichtung von Nextcloud
-
-Testen der Funktionen und Verbindungen
 
 
 # Systemarchitektur
@@ -39,100 +56,166 @@ EC2-Umgebung: Bereitgestellt und konfiguriert von Ben Kälin
 
 Nextcloud-Clientzugriff: Webbrowser
 
-HIER SCREENSHOT DER ARCHITEKTUR EINFÜGEN
+## Übersicht
+
+- **Client**  
+  Greift über HTTPS über den Browser auf die Nextcloud-Weboberfläche zu.
+
+- **Webserver (EC2 Instance)**  
+  - Betriebssystem: Ubuntu Server  
+  - Dienste: Apache, PHP, Nextcloud  
+  - Verantwortlich für UI, Webanfragen, Filesharing  
+  - Verbindung zur Datenbank über Port 3306
+
+- **Datenbankserver (EC2 Instance)**  
+  - Betriebssystem: Ubuntu Server  
+  - Dienst: MariaDB / MySQL  
+  - Erstellt von Jan (DB-Verantwortlicher)  
+  - Speichert Benutzer, Dateien, Konfigurationen
+
+- **Netzwerk / AWS Security Groups**  
+  - HTTP/HTTPS: nur vom Client → Webserver  
+  - Port 3306: nur Webserver → DB-Server  
+  - SSH: eingeschränkt für Wartung
+
+---
+<br>
+<br>
 
 
-# Scripts
 
-Die Scripts selbst werden nicht im Dokument angezeigt, aber klar markiert, wo sie eingefügt werden sollen.
+# Automatisierung & Installation
 
-## Installationsscript für Nextcloud
+## Voraussetzungen
+- AWS Account
+- Zwei EC2-Instanzen (Webserver & DB-Server)
+- Ubuntu Server
+- SSH-Zugriff
 
-Dieses Script automatisiert die Installation von Apache, PHP und Nextcloud sowie die Konfiguration der benötigten Verzeichnisse.
+## Ablauf der Installation
 
-HIER DAS INSTALLATIONSSCRIPT (CODEBLOCK) EINFÜGEN
+1. Erstellung der EC2-Instanzen in AWS
+2. Konfiguration der Security Groups (Ports und Zugriffe)
+3. Ausführung des Webserver-Skripts
+4. Ausführung des Datenbank-Skripts
+5. Initialisierung von Nextcloud über den Webbrowser
+<br>
+<br>
 
-# INSTALLATIONSSCRIPT HIER EINSETZEN
+Die Installation der gesamten Nextcloud-Umgebung erfolgt vollständig automatisiert über zwei Bash-Skripte.
+Dadurch kann die Umgebung jederzeit wieder gleich aufgebaut werden.
+Die Skripte übernehmmen sowohl die Installation der Pakete als auch die Grundkonfigurationen der Dienste.
 
-## Datenbank-Script
+## Webserver-Skript
+Das Webserver-Skript installiert Apache, PHP sowie alle benötigten PHP-Erweiterungen für Nextcloud.
+Anschliessend wird Nextcloud heruntergeladen, entpackt und die benötigten Verzeichnisse werden korrekt gesetzt.
+Zum Schluss wird der Apache-Webserver neu gestartet.
 
-Dieses Script wurde von Jan erstellt und legt Datenbank, Benutzer und Rechte für Nextcloud an.
+HIER INSTALLATIONSSKRIPT EINFÜGEN
 
-HIER DAS DATENBANKSCRIPT EINFÜGEN
+# Datenbank-Setup
+Das Datenbank-Skript erstellt die Datenbank für Nextcloud sowie einen dedizierten Datenbankbenutzer.
+Dem Benutzer werden ausschliesslich die benötigten Rechte auf die Nextcloud-Datenbank vergeben.
 
-# DATENBANKSCRIPT HIER EINSETZEN
+HIER DATENBANKSKRIPT EINFÜGEN
 
-# Testing
-## Testfall 1 – Apache Installation & Webserver-Betrieb
 
-Durchgeführt von: Ben und Lorin
+# Tests
 
-Ziel: Sicherstellen, dass Apache korrekt läuft
+## Testfall 1 – Apache Webserver
 
-Vorgehen: Installation via Script, Browseraufruf der Server-IP
+**Ziel:**  
+Überprüfen, ob der Apache-Webserver korrekt installiert wurde.
 
-Erwartung: Apache Default Website erscheint
+**Vorgehen:**  
+Aufruf der Server-IP im Browser.
 
-Ergebnis: Erfolgreich
+**Erwartetes Ergebnis:**  
+Die Apache Default Page wird angezeigt.
 
-SCREENSHOT APACHE DEFAULT PAGE EINFÜGEN
+**Ergebnis:**  
+Erfolgreich.
 
-## Testfall 2 – MySQL/MariaDB Setup
+**Nachweis:**  
+SCREENSHOT HIER EINFÜGEN
 
-Durchgeführt von: Jan
 
-Ziel: Prüfen, ob Datenbank & User korrekt erstellt wurden
+## Testfall 2 – Datenbank-Setup (MariaDB / MySQL)
 
-Vorgehen: Einloggen in MySQL, SHOW DATABASES
+**Ziel:**  
+Überprüfen, ob die Datenbank für Nextcloud korrekt erstellt wurde.
 
-Erwartung: nextcloud DB sichtbar, Benutzer vorhanden
+**Vorgehen:**  
+Anmeldung am Datenbankserver und Ausführen des Befehls `SHOW DATABASES;`.
 
-Ergebnis: Erfolgreich
+**Erwartetes Ergebnis:**  
+Die Nextcloud-Datenbank sowie der zugehörige Benutzer sind vorhanden.
 
-SCREENSHOT VON MySQL/SHOW DATABASES EINFÜGEN
+**Ergebnis:**  
+Erfolgreich.
 
-## Testfall 3 – Verbindung Webserver ↔ Datenbankserver
+**Nachweis:**  
+SCREENSHOT MySQL `SHOW DATABASES` HIER EINFÜGEN
 
-Durchgeführt von: Ben und Jan
 
-Ziel: Sicherstellen, dass Nextcloud auf die DB zugreifen kann
+## Testfall 3 – Verbindung Webserver zu Datenbankserver
 
-Vorgehen: Nextcloud Setup im Browser gestartet
+**Ziel:**  
+Sicherstellen, dass der Webserver erfolgreich auf den Datenbankserver zugreifen kann.
 
-Erwartung: Keine Fehlermeldung bezüglich DB
+**Vorgehen:**  
+Start des Nextcloud-Installationsassistenten im Webbrowser.
 
-Ergebnis: Erfolgreich
+**Erwartetes Ergebnis:**  
+Keine Fehlermeldung bezüglich der Datenbankverbindung.
 
-SCREENSHOT NEXTCLOUD-INSTALLER (DB-SEITE) EINFÜGEN
+**Ergebnis:**  
+Erfolgreich.
+
+**Nachweis:**  
+SCREENSHOT NEXTCLOUD INSTALLER (DATENBANKSEITE) HIER EINFÜGEN
 
 
 ## Testfall 4 – Nextcloud Startseite
 
-Durchgeführt von: Lorin
+**Ziel:**  
+Überprüfen, ob Nextcloud nach der Installation korrekt startet.
 
-Ziel: Überprüfen, ob Nextcloud nach Installation startet
+**Vorgehen:**  
+Aufruf der Nextcloud-Weboberfläche und Anmeldung mit einem Benutzerkonto.
 
-Vorgehen: Webbrowser öffnen, Login durchführen
+**Erwartetes Ergebnis:**  
+Das Nextcloud-Dashboard wird korrekt geladen.
 
-Erwartung: Dashboard lädt normal
+**Ergebnis:**  
+Erfolgreich.
 
-Ergebnis: Erfolgreich
+**Nachweis:**  
+SCREENSHOT NEXTCLOUD DASHBOARD HIER EINFÜGEN
 
-SCREENSHOT NEXTCLOUD DASHBOARD EINFÜGEN
+## Übersicht der Testfälle
+| Testfall | Ziel | Ergebnis |
+|--------|------|---------|
+| Apache Webserver | Webserver läuft | Erfolgreich |
+| Datenbank-Setup | DB vorhanden | Erfolgreich |
+| Web zu DB Verbindung | Zugriff möglich | Erfolgreich |
+| Nextcloud Start | Dashboard lädt | Erfolgreich |
+
+
+<br>
+<br>
+
 
 # Reflexion
-## Reflexion von Lorin
 
-..........
+## Reflexion von Lorin
+TEXT
 
 ## Reflexion von Ben
-
-................
+TEXT
 
 ## Reflexion von Jan
-
-................
+TEXT
 
 # Fazit
-
-........
+TEXT
