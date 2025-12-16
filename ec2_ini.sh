@@ -17,6 +17,11 @@ DB_INSTANCE_NAME="DB-Server_test"
 ### ======================
 ### KEYPAIRS
 ### ======================
+
+echo ""
+echo "Die Keypairs werden erstellt"
+echo ""
+
 aws ec2 create-key-pair \
   --key-name "$NC_KEY_NAME" \
   --query 'KeyMaterial' \
@@ -32,6 +37,10 @@ chmod 600 ~/.ssh/*.pem
 ### ======================
 ### SECURITY GROUPS
 ### ======================
+
+echo ""
+echo "Die Security Gruppen werden erstellt"
+echo ""
 
 # Nextcloud SG
 NC_SG_ID=$(aws ec2 create-security-group \
@@ -69,6 +78,10 @@ aws ec2 authorize-security-group-ingress \
 ### EC2 INSTANZEN
 ### ======================
 
+echo ""
+echo "Die Instanzen werden erstellt"
+echo ""
+
 # Nextcloud
 NC_INSTANCE_ID=$(aws ec2 run-instances \
   --image-id $AMI_ID \
@@ -97,7 +110,9 @@ DB_INSTANCE_ID=$(aws ec2 run-instances \
 ### INFOS AUSGEBEN
 ### ======================
 
-sleep 10
+echo ""
+echo "Nextcloud wird installiert... (5-7 min. bis das Setup erreichbar ist.)"
+echo ""
 
 NC_PUBLIC_IP=$(aws ec2 describe-instances \
   --instance-ids $NC_INSTANCE_ID \
@@ -110,9 +125,18 @@ DB_PRIVATE_IP=$(aws ec2 describe-instances \
   --output text)
 
 echo "======================================="
-echo " Nextcloud erreichbar unter:"
-echo " http://$NC_PUBLIC_IP"
+echo " Nextcloud erreichbar unter folgender IP:"
+echo " $NC_PUBLIC_IP"
 echo ""
-echo " DB Private IP:"
+echo " Benutze folgenden Datenbankbenutzer:"
+echo " nc_user"
+echo ""
+echo " Benutze folgendes Passwort:"
+echo " nc_adminpwd25?!"
+echo ""
+echo " Benutze folgende Datenbank:"
+echo " nc_database"
+echo ""
+echo " Benutze folgenden Host:"
 echo " $DB_PRIVATE_IP"
 echo "======================================="
