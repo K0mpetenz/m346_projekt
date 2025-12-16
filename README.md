@@ -1,7 +1,7 @@
 # Nextcloud – Automatisierte Cloud-Installation
 
 Dieses Repository enthält die Projektarbeit aus dem Modul 346.
-Ziel des Projekts war es, Nextcloud in einer Cloud-Umgebung zu installieren und die Installation möglichst zu automatisieren.
+Ziel des Projekts war es, Nextcloud in einer Cloud-Umgebung zu installieren und den Installationsprozess möglichst zu automatisieren.
 
 ---
 
@@ -11,7 +11,7 @@ Nextcloud wird auf zwei Servern betrieben:
 - **Webserver**: Apache, PHP und Nextcloud
 - **Datenbankserver**: MariaDB
 
-Die Installation und Grundkonfiguration erfolgen über Skripte, damit der Service reproduzierbar aufgesetzt werden kann.
+Die Installation basiert auf Skripten und Konfigurationsdateien, sodass möglichst viele Schritte automatisch ausgeführt werden.
 
 ---
 
@@ -19,11 +19,11 @@ Die Installation und Grundkonfiguration erfolgen über Skripte, damit der Servic
 
 | Datei | Beschreibung |
 |------|-------------|
-| `ec2_ini.sh` | Initialisierung des Webservers (Apache, PHP und Nextcloud) |
-| `db_ini.txt` | Einrichtung der Datenbank |
-| `nc_ini.txt` | Nextcloud-spezifische Konfiguration |
-| `DokumentationLorinJANBEN.md` | Projektdokumentation inkl. Tests & Reflexion |
-| `README.md` | Projektübersicht |
+| `ec2_ini.sh` | Startskript für die Installation und Konfiguration |
+| `db_ini.txt` | Datenbank-Konfiguration |
+| `nc_ini.txt` | Nextcloud-Konfiguration |
+| `DokumentationLorinJANBEN.md` | Projektdokumentation |
+| `README.md` | Projektübersicht & Anleitung |
 
 ---
 
@@ -37,43 +37,13 @@ Die Installation und Grundkonfiguration erfolgen über Skripte, damit der Servic
 
 ---
 
-## Installation (Kurzüberblick)
+## Installation (Anleitung)
 
-1. EC2-Instanzen erstellen (Webserver & Datenbankserver)
-2. Datenbank-Skript auf dem DB-Server ausführen
-3. Webserver-Skript auf dem Webserver ausführen
-4. Nextcloud im Browser über die IP des Webservers aufrufen
-
----
-
-## Aktueller Stand
-
-Die Grundinstallation des Webservers und der Datenbank funktioniert.
-Nextcloud lässt sich starten und aufrufen, jedoch ist die Installation **noch nicht vollständig automatisiert**.
-Einzelne Schritte müssen aktuell manuell überprüft oder nachjustiert werden.
-
-Das Projekt zeigt den geplanten Aufbau und die Automatisierungsidee, auch wenn die Umsetzung noch nicht in allen Punkten abgeschlossen ist.
-
----
-
-## Tests
-
-Folgende Tests wurden durchgeführt:
-- Apache-Webserver läuft
-- Datenbank ist erreichbar
-- Verbindung zwischen Webserver und Datenbank wurde getestet
-- Nextcloud-Weboberfläche ist erreichbar
-
----
-
-## Team
-
-- **Lorin Frei** – Dokumentation & Nextcloud
-- **Ben Kälin** – AWS & Infrastruktur
-- **Jan Dörig** – Datenbank
-
----
-
-## Hinweis
-
-Dieses Projekt dient zu Lernzwecken im Rahmen der Ausbildung und ist nicht für den produktiven Einsatz vorgesehen.
+1. Die Dateien `ec2_ini.sh`, `db_ini.txt` und `nc_ini.txt` in den **AWS-Ordner** auf dem Server kopieren.
+2. In das entsprechende Verzeichnis wechseln:
+   ```bash
+   cd AWS
+3. Das Installationsskript ausführen:
+    bash ec2_ini.sh
+4. Die weiteren Schritte werden automatisch ausgeführt.
+5. Nach Abschluss kann Nextcloud über die öffentliche IP des Webservers im Browser aufgerufen werden.
