@@ -19,9 +19,9 @@ Die Installation basiert auf Skripten und Konfigurationsdateien, sodass möglich
 
 | Datei | Beschreibung |
 |------|-------------|
-| `ec2_ini.sh` | Startskript für die Installation und Konfiguration |
-| `db_ini.txt` | Datenbank-Konfiguration |
-| `nc_ini.txt` | Nextcloud-Konfiguration |
+| `ini.sh` | Startskript für die Installation und Konfiguration |
+| `db_ini.yml` | Datenbank-Konfiguration |
+| `nc_ini.yml` | Nextcloud-Konfiguration |
 | `DokumentationLorinJANBEN.md` | Projektdokumentation |
 | `README.md` | Projektübersicht & Anleitung |
 
@@ -39,11 +39,13 @@ Die Installation basiert auf Skripten und Konfigurationsdateien, sodass möglich
 
 ## Installation (Anleitung)
 
-1. Die Dateien `ec2_ini.sh`, `db_ini.txt` und `nc_ini.txt` in den **AWS-Ordner** auf dem Server kopieren.
+1. Die Dateien `ini.sh`, `db_ini.yml` und `nc_ini.yml` in den **AWS-Ordner** auf dem Server kopieren.
 2. In das entsprechende Verzeichnis wechseln:
    ```bash
    cd AWS
-3. Das Installationsskript ausführen:
-    bash ec2_ini.sh
-4. Die weiteren Schritte werden automatisch ausgeführt.
-5. Nach Abschluss kann Nextcloud über die öffentliche IP des Webservers im Browser aufgerufen werden.
+3. der ini.sh die richten Rechte geben
+    ```chmod u+x
+4. Das Installationsskript ausführen:
+    bash ini.sh
+5. Die weiteren Schritte werden automatisch ausgeführt.
+6. Nach Abschluss kann Nextcloud über die öffentliche IP des Webservers im Browser aufgerufen werden.
