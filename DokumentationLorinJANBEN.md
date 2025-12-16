@@ -134,14 +134,15 @@ Zum Schluss wird der Apache-Webserver neu gestartet.
 
 HIER INSTALLATIONSSKRIPT EINFÜGEN
 ``bash
-# install_webserver.sh
+# nc_ini.yml
 INHALT DES SKRIPTS
 
 # Datenbank-Setup
 Das Datenbank-Skript erstellt die Datenbank für Nextcloud sowie einen dedizierten Datenbankbenutzer.
 Dem Benutzer werden ausschliesslich die benötigten Rechte auf die Nextcloud-Datenbank vergeben.
 
-HIER DATENBANKSKRIPT EINFÜGEN
+# db_ini.yml
+INHALT DES SKRIPTS
 
 
 # Tests
@@ -239,7 +240,7 @@ Ich habe bei der Installation von Nextcloud viel über den Aufbau und die Funkti
 Ich habe gelernt, dass eine gute Dokumentation und klare Absprachen im Team wichtig sind.
 
 ## Reflexion von Ben
-TEXT
+Anfangs ist uns die Arbeitsaufteilung gut gelungen. Wir hatten paar Probleme mit der AWS Umgebung. Ich hatte meinen Teil für die Nextcloud Datei schnell erstellt. Jan hatte dann Probleme mit dem Datenbank Teil. Ich habe Jan dann bei diesem Teil geholfen. Jetzt zu Schluss funtioniert alles und ich bin stolz auf das Resultat.
 
 ## Reflexion von Jan
 TEXT
