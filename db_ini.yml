@@ -18,12 +18,12 @@ runcmd:
   # Root-Passwort setzen
   - |
     mysql -u root <<'EOF'
-    ALTER USER 'root'@'localhost' IDENTIFIED BY 'MySecretRootPass123!';
+    ALTER USER 'root'@'localhost' IDENTIFIED BY 'dsmnWQsa112sSA!?sd12SA0!';
     FLUSH PRIVILEGES;
     EOF
   # Datenbank + User für Nextcloud
   - |
-    mysql -u root -pMySecretRootPass123! <<'EOF'
+    mysql -u root -pdsmnWQsa112sSA!?sd12SA0! <<'EOF'
     CREATE DATABASE IF NOT EXISTS nc_database
       CHARACTER SET utf8mb4
       COLLATE utf8mb4_general_ci;
