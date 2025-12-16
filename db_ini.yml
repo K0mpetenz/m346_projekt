@@ -1,0 +1,35 @@
+#cloud-config
+ 
+package_update: true
+package_upgrade: true
+ 
+packages:
+  - mariadb-server
+ 
+runcmd:
+  # MariaDB starten & aktivieren
+  - systemctl enable mariadb
+  - systemctl start mariadb
+ 
+  # MariaDB auf allen Interfaces lauschen (wichtig für private IP)
+  - sed -i "s/^bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
+  - systemctl restart mariadb
+ 
+  # Root-Passwort setzen
+  - |
+    mysql -u root <<'EOF'
+    ALTER USER 'root'@'localhost' IDENTIFIED BY 'MySecretRootPass123!';
+    FLUSH PRIVILEGES;
+    EOF
+  # Datenbank + User für Nextcloud
+  - |
+    mysql -u root -pMySecretRootPass123! <<'EOF'
+    CREATE DATABASE IF NOT EXISTS nc_database
+      CHARACTER SET utf8mb4
+      COLLATE utf8mb4_general_ci;
+ 
+    CREATE USER IF NOT EXISTS 'nc_user'@'%' IDENTIFIED BY 'nc_adminpwd25?!';
+    GRANT ALL PRIVILEGES ON nc_database.* TO 'nc_user'@'%';
+    FLUSH PRIVILEGES;
+    EOF
+ 
