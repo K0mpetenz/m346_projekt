@@ -243,7 +243,7 @@ Ich habe gelernt, dass eine gute Dokumentation und klare Absprachen im Team wich
 Anfangs ist uns die Arbeitsaufteilung gut gelungen. Wir hatten paar Probleme mit der AWS Umgebung. Ich hatte meinen Teil für die Nextcloud Datei schnell erstellt. Jan hatte dann Probleme mit dem Datenbank Teil. Ich habe Jan dann bei diesem Teil geholfen. Jetzt zu Schluss funtioniert alles und ich bin stolz auf das Resultat.
 
 ## Reflexion von Jan
-TEXT
+Ich finde im grossen und ganzen ist es uns gut gelungen. Das Zeitmanagment ist uns jedoch nicht so gut gelungen. Ausserdem hatten wir viele Probleme bei der Dantenbak, die Netxcloud konnte kiene Verbindung aufbauen zur Datenbank, ob wohl die Datenbank erstellt wurde. Ben hat mir dann zum Glück geholfen und jetzt funktioniert alles. Es hat mir Wertvolle Erfahrung gebracht, die mich im weiteren Leben sehr weit bringen können. Ich kenne mich jetzt auch mit AWS besser aus.
 
 # Fazit
 Die Installation von Nextcloud auf AWS wurde erfolgreich durchgeführt.
