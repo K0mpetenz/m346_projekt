@@ -66,7 +66,9 @@ Nextcloud-Clientzugriff: Webbrowser
 | Admin | Webserver / DB | 22 | SSH | Wartung & Administration |
 ### Architekturübersicht
 
-SCREENSHOT / ARCHITEKTURDIAGRAMM HIER EINFÜGEN
+<p align="center">
+<img src="Bilder/Bild.png">
+</p>  
 
 **Beschreibung:**  
 Der Client greift über einen Webbrowser auf die Nextcloud-Weboberfläche zu.
@@ -132,18 +134,9 @@ Das Webserver-Skript installiert Apache, PHP sowie alle benötigten PHP-Erweiter
 Anschliessend wird Nextcloud heruntergeladen, entpackt und die benötigten Verzeichnisse werden korrekt gesetzt.
 Zum Schluss wird der Apache-Webserver neu gestartet.
 
-HIER INSTALLATIONSSKRIPT EINFÜGEN
-``bash
-# nc_ini.yml
-INHALT DES SKRIPTS
-
 # Datenbank-Setup
 Das Datenbank-Skript erstellt die Datenbank für Nextcloud sowie einen dedizierten Datenbankbenutzer.
 Dem Benutzer werden ausschliesslich die benötigten Rechte auf die Nextcloud-Datenbank vergeben.
-
-# db_ini.yml
-INHALT DES SKRIPTS
-
 
 # Tests
 
