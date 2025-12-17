@@ -155,7 +155,9 @@ Die Apache Default Page wird angezeigt.
 Erfolgreich.
 
 **Nachweis:**  
-SCREENSHOT HIER EINFÜGEN
+<p align="center">
+<img src="Bilder/defaultpage.png">
+</p> 
 
 
 ## Testfall 2 – Datenbank-Setup (MariaDB / MySQL)
