@@ -175,7 +175,9 @@ Die Nextcloud-Datenbank sowie der zugehörige Benutzer sind vorhanden.
 Erfolgreich.
 
 **Nachweis:**  
-SCREENSHOT MySQL `SHOW DATABASES` HIER EINFÜGEN
+<p align="center">
+<img src="Bilder/datenbanken.png">
+</p> 
 
 
 ## Testfall 3 – Verbindung Webserver zu Datenbankserver
@@ -193,7 +195,9 @@ Keine Fehlermeldung bezüglich der Datenbankverbindung.
 Erfolgreich.
 
 **Nachweis:**  
-SCREENSHOT NEXTCLOUD INSTALLER (DATENBANKSEITE) HIER EINFÜGEN
+<p align="center">
+<img src="Bilder/erfolgreichedatenbankverbindung.png">
+</p> 
 
 
 ## Testfall 4 – Nextcloud Startseite
@@ -211,7 +215,9 @@ Das Nextcloud-Dashboard wird korrekt geladen.
 Erfolgreich.
 
 **Nachweis:**  
-SCREENSHOT NEXTCLOUD DASHBOARD HIER EINFÜGEN
+<p align="center">
+<img src="Bilder/erfolgreicherlogin.png">
+</p> 
 
 ## Übersicht der Testfälle
 | Testfall | Ziel | Ergebnis |
