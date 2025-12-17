@@ -8,11 +8,11 @@ AMI_ID="ami-08c40ec9ead489470"
 INSTANCE_TYPE="t2.micro"
 IAM_PROFILE="LabInstanceProfile"
 
-NC_KEY_NAME="nextcloud-key_test"
-DB_KEY_NAME="database-key_test"
+NC_KEY_NAME="nextcloud-key"
+DB_KEY_NAME="database-key"
 
-NC_INSTANCE_NAME="NC-Server_test"
-DB_INSTANCE_NAME="DB-Server_test"
+NC_INSTANCE_NAME="NC-Server"
+DB_INSTANCE_NAME="DB-Server"
 
 ### ======================
 ### KEYPAIRS
