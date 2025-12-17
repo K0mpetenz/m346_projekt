@@ -44,7 +44,8 @@ Die Installation basiert auf Skripten und Konfigurationsdateien, sodass möglich
    ```bash
    cd AWS
 3. der ini.sh die richten Rechte geben
-    ```chmod u+x
+   ```bash
+   chmod u+x <Dateiname>
 4. Das Installationsskript ausführen:
     bash ini.sh
 5. Die weiteren Schritte werden automatisch ausgeführt.
